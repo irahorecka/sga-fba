@@ -1,8 +1,6 @@
 import cobra
 
-from pylib.std import write_json
-
-from cobra_utils import load_model, FBA_DIR
+from cobra_utils import load_model, write_json, FBA_DIR
 
 
 def get_gene_rxns_from_model(model: cobra.core.model.Model) -> dict:

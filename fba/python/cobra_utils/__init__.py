@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import cobra
@@ -11,3 +12,9 @@ def load_model(sbml_path: str, solver: str = "glpk") -> cobra.core.model.Model:
     model = cobra.io.read_sbml_model(str(sbml_path))
     model.solver = solver
     return model
+
+
+def write_json(data, filepath):
+    """Writes `data` <dict> to filepath as .json file."""
+    with open(filepath, "w") as f:
+        json.dump(data, f)
