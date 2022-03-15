@@ -18,4 +18,6 @@ if __name__ == "__main__":
     single_deletion_flux = generate_deletion_flux(
         single_gene_deletion, model, gene_list=model.genes[:5]
     )
-    single_deletion_flux.to_csv("single_gene_deletion_output.tsv", sep="\t", index=False)
+    single_deletion_flux.to_csv(
+        FBA_DIR / "data" / "single_gene_deletion_output.tsv", sep="\t", index=False
+    )
