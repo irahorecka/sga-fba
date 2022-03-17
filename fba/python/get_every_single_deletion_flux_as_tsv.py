@@ -16,7 +16,7 @@ def generate_deletion_flux(
 if __name__ == "__main__":
     model = load_model(str(FBA_DIR / "model" / "yeast-GEM.xml"))
     single_deletion_flux = generate_deletion_flux(
-        single_gene_deletion, model, gene_list=model.genes[:5]
+        single_gene_deletion, model, gene_list=model.genes[:]
     )
     single_deletion_flux.to_csv(
         FBA_DIR / "data" / "single_gene_deletion_output.tsv", sep="\t", index=False
