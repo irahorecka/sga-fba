@@ -2,11 +2,12 @@
 Defines upper bounds of YP base media for FBA
 """
 
-from constants import media_components
+from fba.src.growth.media.constants import media_components
 
 yp = {
     media_components["oxygen"]: 6.3,
     media_components["ammonium"]: 100.0,
+    media_components["sulphate"]: 100.0,
     media_components["phosphate"]: 0.89,
     # Carbon
     media_components["D-glucose"]: 0.0,

@@ -1,6 +1,9 @@
 # TODO: make suite of media for SD
 
-from fba.src.growth.media.ypac import ypac
+# SD-based media
+from fba.src.growth.media.sdszappanos import sdszappanos
+
+# YP-based media
 from fba.src.growth.media.ypac import ypac
 from fba.src.growth.media.ypd import ypd
 from fba.src.growth.media.ypetoh import ypetoh
