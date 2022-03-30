@@ -2,7 +2,7 @@
 Defines upper bounds of YP base media for FBA
 """
 
-from fba.src.growth.media.constants import media_components
+from fba.src.media.constants import media_components
 
 yp = {
     media_components["oxygen"]: 6.3,

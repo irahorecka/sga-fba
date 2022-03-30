@@ -1,9 +1,9 @@
 """
-Defines upper bounds of SD media used by Szappanos et al., 2011
+Defines upper bounds of in silico SD media used by Szappanos et al., 2011
 """
 
-from fba.src.growth.media.constants import media_components
-from fba.src.growth.media.sd import sd
+from fba.src.media.constants import media_components
+from fba.src.media.sd.base import sd
 
 szappanos = {
     media_components["oxygen"]: 6.3,

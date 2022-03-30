@@ -1,6 +1,10 @@
-# Maps media component names to its respective reaction ID in
-# yeast-GEM 8.5.0
-# All media components listed are a part of an EXCHANGE rxn
+"""
+Maps media component names to its respective reaction ID in
+yeast-GEM 8.5.0.
+
+All media components listed are a part of an EXCHANGE reaction.
+"""
+
 media_components = {
     "oxygen": "r_1992",
     "ammonium": "r_1654",

@@ -2,8 +2,8 @@
 Defines upper bounds of YPTE with no glucose media for FBA
 """
 
-from fba.src.growth.media.constants import media_components
-from fba.src.growth.media.yp import yp
+from fba.src.media.constants import media_components
+from fba.src.media.yp.base import yp
 
 te_no_glc = {
     media_components["ergosterol"]: 0.0026,
