@@ -5,7 +5,7 @@ yeast-GEM 8.5.0.
 All media components listed are a part of an EXCHANGE reaction.
 """
 
-media_components = {
+media_reagents = {
     "oxygen": "r_1992",
     "ammonium": "r_1654",
     "phosphate": "r_2005",
