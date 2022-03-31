@@ -9,7 +9,7 @@ sys.path.append(str(ROOT_DIR))
 
 from cobra.flux_analysis import single_gene_deletion
 
-from fba.src.media import (
+from yeast.core.media import (
     apply_media,
     scade,
     scarg,

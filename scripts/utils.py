@@ -4,6 +4,16 @@ import cobra
 import lxml
 
 
+def optimize(model_func):
+    def wrapper(*args, **kwargs):
+        model = model_func(*args, **kwargs)
+        model.optimize()
+        return model
+
+    return wrapper
+
+
+@optimize
 def load_model(model_path, solver="cplex"):
     model = cobra.io.read_sbml_model(model_path)
     model.solver = solver
@@ -14,10 +24,10 @@ def export_deletion_flux_as_tsv(df, filepath):
     df.to_csv(filepath, sep="\t", index=False)
 
 
-def knockout_gene(model, genes):
-    for gene in genes:
-        model.genes.query(gene).pop().knock_out()
-    model.optimize()
+@optimize
+def knockout_genes(model, genes):
+    # Removes genes entirely from model
+    cobra.manipulation.remove_genes(model, genes)
     return model
 
 

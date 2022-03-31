@@ -6,7 +6,7 @@ sys.path.append(str(ROOT_DIR))
 
 from cobra.flux_analysis import single_gene_deletion, double_gene_deletion
 
-from fba.src.media import apply_media, sdszappanos
+from yeast.core.media import apply_media, sdszappanos
 from scripts.utils import (
     assess_gene_knockout_lethality,
     export_deletion_flux_as_tsv,
