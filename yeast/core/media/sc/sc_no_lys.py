@@ -9,4 +9,4 @@ lys = {
     reagents["L-lysine"]: 0.0,
 }
 
-sclys = {**sc, **lys}
+sc_no_lys = {**sc, **lys}

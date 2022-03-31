@@ -9,4 +9,4 @@ ino = {
     reagents["myo-inositol"]: 0.0,
 }
 
-scino = {**sc, **ino}
+sc_no_ino = {**sc, **ino}

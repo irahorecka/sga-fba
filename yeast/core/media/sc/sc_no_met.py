@@ -9,4 +9,4 @@ met = {
     reagents["L-methionine"]: 0.0,
 }
 
-scmet = {**sc, **met}
+sc_no_met = {**sc, **met}

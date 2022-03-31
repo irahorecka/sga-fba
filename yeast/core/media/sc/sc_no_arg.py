@@ -9,4 +9,4 @@ arg = {
     reagents["L-arginine"]: 0.0,
 }
 
-scarg = {**sc, **arg}
+sc_no_arg = {**sc, **arg}

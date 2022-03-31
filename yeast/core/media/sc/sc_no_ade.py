@@ -9,4 +9,4 @@ ade = {
     reagents["adenine"]: 0.0,
 }
 
-scade = {**sc, **ade}
+sc_no_ade = {**sc, **ade}
