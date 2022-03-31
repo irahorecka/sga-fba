@@ -1,11 +1,10 @@
 """
-Maps media component names to its respective reaction ID in
-yeast-GEM 8.5.0.
-
-All media components listed are a part of an EXCHANGE reaction.
+Holds constants pertaining to growth media in FBA model yeast-GEM 8.5.0.
 """
 
-media_reagents = {
+# Maps media component names to its respective reaction ID.
+# Every reagent below is a part of an EXCHANGE reaction.
+reagents = {
     "oxygen": "r_1992",
     "ammonium": "r_1654",
     "phosphate": "r_2005",

@@ -3,13 +3,13 @@ OOP representation of yeast-GEM media
 """
 
 # SC-based media
-from fba.src.media.sc import sc, scade, scarg, scino, sclys, scmet
+from yeast.core.media.sc import sc, scade, scarg, scino, sclys, scmet
 
 # SD-based media
-from fba.src.media.sd import sd, sdszappanos
+from yeast.core.media.sd import sd, sdszappanos
 
 # YP-based media
-from fba.src.media.yp import (
+from yeast.core.media.yp import (
     yp,
     ypac,
     ypd,
