@@ -7,7 +7,7 @@ from yeast.core.media.constants import reagents
 sc = {
     reagents["oxygen"]: 6.3,
     reagents["ammonium"]: 100.0,
-    reagents["sulphate"]: 100.0,
+    reagents["sulphite"]: 100.0,
     reagents["phosphate"]: 0.89,
     # Carbon
     reagents["D-glucose"]: 22.6,

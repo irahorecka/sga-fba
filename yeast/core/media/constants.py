@@ -8,7 +8,7 @@ reagents = {
     "oxygen": "r_1992",
     "ammonium": "r_1654",
     "phosphate": "r_2005",
-    "sulphate": "r_2060",
+    "sulphite": "r_2061",
     "D-glucose": "r_1714",
     "glycerol": "r_1808",
     "(S)-lactate": "r_1551",
