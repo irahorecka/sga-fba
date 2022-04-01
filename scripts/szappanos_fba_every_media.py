@@ -9,78 +9,40 @@ sys.path.append(str(ROOT_DIR))
 
 from cobra.flux_analysis import single_gene_deletion
 
-from yeast.core.media import (
-    apply_media,
-    scade,
-    scarg,
-    scino,
-    sclys,
-    scmet,
-    sd,
-    sdszappanos,
-    yp,
-    ypac,
-    ypd,
-    ypetoh,
-    ypgal,
-    ypgly,
-    yplac,
-    ypraff,
-    ypte_no_glc,
-    ypte_no_o2,
-)
-
-from scripts.utils import (
-    assess_gene_knockout_lethality,
-    export_deletion_flux_as_tsv,
-    knockout_gene,
-    load_model,
-    write_json,
-)
-
-FBA_MODEL_DIR = ROOT_DIR / "fba" / "model"
+from scripts.utils import export_deletion_flux_as_tsv, write_json
+from yeast.core.gene import assess_gene_knockout_viability, knockout_genes
+from yeast.core.gene.essential import attenuate_flux
+from yeast.core.media import apply_media, get_every_media
+from yeast.core.model import get_objective_value, load_model
 
 
-def main(model_filepath, model_description=""):
+def main(model_description=""):
     # Apply media as constructed in in silico model from Szappanos et al., 2011 paper
-    media = (
-        ("scade", scade),
-        ("scarg", scarg),
-        ("scino", scino),
-        ("sclys", sclys),
-        ("scmet", scmet),
-        ("sd", sd),
-        ("sdszappanos", sdszappanos),
-        ("yp", yp),
-        ("ypac", ypac),
-        ("ypd", ypd),
-        ("ypetoh", ypetoh),
-        ("ypgal", ypgal),
-        ("ypgly", ypgly),
-        ("yplac", yplac),
-        ("ypraff", ypraff),
-        ("ypte_no_glc", ypte_no_glc),
-        ("ypte_no_o2", ypte_no_o2),
-    )
-    for medium_name, medium in media:
+    for medium_name, medium in get_every_media().items():
+        # Load model and apply medium
         print("loading model...")
-        model = load_model(str(model_filepath))
-
+        model = load_model()
         print(f"applying media {medium_name}...")
-        summary = {"medium": medium_name}
         model = apply_media(model, medium)
 
         # URA3 ('YEL021W') and LEU2 ('YCL018W')
         ko_genes = ["YEL063C", "YNL268W", "YLR303W", "YEL021W", "YCL018W"]
         non_lethal_ko_genes = [
-            gene for gene in ko_genes if assess_gene_knockout_lethality(model, gene) is False
+            gene for gene in ko_genes if assess_gene_knockout_viability(model, gene) is True
         ]
-        print("non-lethal genes to delete:", non_lethal_ko_genes)
-        summary["non-lethal-gene-ko"] = non_lethal_ko_genes
-        model = knockout_gene(model, non_lethal_ko_genes)
+        lethal_genes = list(set(ko_genes).symmetric_difference(set(non_lethal_ko_genes)))
+
+        # Gene knockout
+        print("non-essential genes to delete:", non_lethal_ko_genes)
+        summary = {"medium": medium_name, "non-lethal-gene-ko": non_lethal_ko_genes}
+        model = knockout_genes(model, non_lethal_ko_genes)
+        print("essential genes to attenuate to 80% fitness each:", lethal_genes)
+        summary["lethal-gene-attenuate"] = lethal_genes
+        for gene in lethal_genes:
+            model = attenuate_flux(model, gene, flux_ratio=0.8)
 
         # Find WT growth
-        wt_fitness = model.optimize().objective_value
+        wt_fitness = get_objective_value(model)
         print("WT fitness is:", wt_fitness)
         summary["wt-fitness"] = wt_fitness
 
@@ -108,7 +70,4 @@ def main(model_filepath, model_description=""):
 
 
 if __name__ == "__main__":
-    main(
-        FBA_MODEL_DIR / "yeast-GEM.xml",
-        model_description="szappanos",
-    )
+    main(model_description="szappanos")

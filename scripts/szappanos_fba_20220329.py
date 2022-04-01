@@ -10,7 +10,7 @@ from yeast.core.media import apply_media, sdszappanos
 from scripts.utils import (
     assess_gene_knockout_lethality,
     export_deletion_flux_as_tsv,
-    knockout_gene,
+    knockout_genes,
     load_model,
 )
 
@@ -29,7 +29,7 @@ def main(model, single_del_export_tsv_filename, double_del_export_tsv_filename):
         gene for gene in ko_genes if assess_gene_knockout_lethality(model, gene) is False
     ]
     print("non-lethal genes to delete:", non_lethal_ko_genes)
-    model = knockout_gene(model, non_lethal_ko_genes)
+    model = knockout_genes(model, non_lethal_ko_genes)
 
     # Find WT growth
     print("WT fitness is:", model.optimize().objective_value)
