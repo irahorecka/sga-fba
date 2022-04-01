@@ -1,0 +1,2 @@
+class IsNonEssentialGene(Exception):
+    pass

@@ -5,14 +5,18 @@ import cobra
 from yeast.util.model import optimize
 
 
-def assess_gene_knockout_viability(model, gene):
-    """Assesses viability of model when `gene` is knocked out.
+def assess_gene_knockout_viability(model, gene_name):
+    """Assesses viability of model when `gene_name` is knocked out.
     Returns True if viable, False if lethal."""
     with model:
-        model.genes.query(gene).pop().knock_out()
+        model.genes.query(gene_name).pop().knock_out()
         if model.optimize().objective_value == 0:
             return False
         return True
+
+
+def get_gene(model, gene_name):
+    return model.genes.query(gene_name)[0]
 
 
 def get_gene_summary(gene):
