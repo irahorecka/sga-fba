@@ -7,7 +7,7 @@ from pprint import pprint
 ROOT_DIR = Path().resolve().parent
 sys.path.append(str(ROOT_DIR))
 
-from cobra.flux_analysis import single_gene_deletion
+from cobra.flux_analysis import double_gene_deletion, single_gene_deletion
 
 from scripts.utils import export_deletion_flux_as_tsv, write_json
 from yeast.core.gene import assess_gene_knockout_viability, knockout_genes
@@ -50,6 +50,9 @@ def main(model_description=""):
         # Perform every single gene knockout
         print("performing total single gene knockout...")
         single_gene_deletions_szappanos = single_gene_deletion(model)
+        # Perform every double gene knockout
+        print("performing total double gene knockout...")
+        double_gene_deletions_szappanos = double_gene_deletion(model)
 
         # Generate appropriate filename
         date = datetime.now().strftime("%Y%m%d")
@@ -58,12 +61,19 @@ def main(model_description=""):
             os.mkdir(dirname)
         json_filename = f"{dirname}.json"
         tsv_filename = f"{dirname}.tsv"
-        summary["tsv-filename"] = tsv_filename
+
+        single_gene_ko_tsv_filename = f"single_gene_ko_{tsv_filename}"
+        double_gene_ko_tsv_filename = f"double_gene_ko_{tsv_filename}"
+        summary["single-gene-ko-tsv-filename"] = single_gene_ko_tsv_filename
+        summary["double-gene-ko-tsv-filename"] = double_gene_ko_tsv_filename
 
         # Export
         print("exporting as tsv...")
         export_deletion_flux_as_tsv(
-            single_gene_deletions_szappanos, os.path.join(dirname, tsv_filename)
+            single_gene_deletions_szappanos, os.path.join(dirname, single_gene_ko_tsv_filename)
+        )
+        export_deletion_flux_as_tsv(
+            double_gene_deletions_szappanos, os.path.join(dirname, double_gene_ko_tsv_filename)
         )
         write_json(summary, os.path.join(dirname, json_filename))
         pprint(summary)
