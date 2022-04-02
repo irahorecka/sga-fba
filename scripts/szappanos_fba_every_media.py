@@ -26,6 +26,7 @@ def main(model_description=""):
         model = apply_media(model, medium)
 
         # URA3 ('YEL021W') and LEU2 ('YCL018W')
+        # KO of YPR021 derived from Heavner and Price - 2015 - update: doesn't help the model
         ko_genes = ["YEL063C", "YNL268W", "YLR303W", "YEL021W", "YCL018W"]
         non_lethal_ko_genes = [
             gene for gene in ko_genes if assess_gene_knockout_viability(model, gene) is True
@@ -38,8 +39,13 @@ def main(model_description=""):
         model = knockout_genes(model, non_lethal_ko_genes)
         print("essential genes to attenuate to 80% fitness each:", lethal_genes)
         summary["lethal-gene-attenuate"] = lethal_genes
-        for gene in lethal_genes:
-            model = attenuate_flux(model, gene, flux_ratio=0.8)
+
+        # The order in which genes are attenuated MATTERS
+        model = attenuate_flux(model, "YCL018W", flux_ratio=0.8)
+        model = attenuate_flux(model, "YEL021W", flux_ratio=0.85)
+
+        # for gene in lethal_genes:
+        #     model = attenuate_flux(model, gene, flux_ratio=0.8)
 
         # Find WT growth
         wt_fitness = get_objective_value(model)
@@ -51,8 +57,8 @@ def main(model_description=""):
         print("performing total single gene knockout...")
         single_gene_deletions_szappanos = single_gene_deletion(model)
         # Perform every double gene knockout
-        print("performing total double gene knockout...")
-        double_gene_deletions_szappanos = double_gene_deletion(model)
+        # print("performing total double gene knockout...")
+        # double_gene_deletions_szappanos = double_gene_deletion(model)
 
         # Generate appropriate filename
         date = datetime.now().strftime("%Y%m%d")
@@ -63,18 +69,18 @@ def main(model_description=""):
         tsv_filename = f"{dirname}.tsv"
 
         single_gene_ko_tsv_filename = f"single_gene_ko_{tsv_filename}"
-        double_gene_ko_tsv_filename = f"double_gene_ko_{tsv_filename}"
+        # double_gene_ko_tsv_filename = f"double_gene_ko_{tsv_filename}"
         summary["single-gene-ko-tsv-filename"] = single_gene_ko_tsv_filename
-        summary["double-gene-ko-tsv-filename"] = double_gene_ko_tsv_filename
+        # summary["double-gene-ko-tsv-filename"] = double_gene_ko_tsv_filename
 
         # Export
         print("exporting as tsv...")
         export_deletion_flux_as_tsv(
             single_gene_deletions_szappanos, os.path.join(dirname, single_gene_ko_tsv_filename)
         )
-        export_deletion_flux_as_tsv(
-            double_gene_deletions_szappanos, os.path.join(dirname, double_gene_ko_tsv_filename)
-        )
+        # export_deletion_flux_as_tsv(
+        #     double_gene_deletions_szappanos, os.path.join(dirname, double_gene_ko_tsv_filename)
+        # )
         write_json(summary, os.path.join(dirname, json_filename))
         pprint(summary)
 
