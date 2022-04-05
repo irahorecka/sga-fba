@@ -1,42 +1,14 @@
+"""
+Common utility functions that are apart from the
+yeast FBA suite.
+"""
+
 import json
 
-import cobra
-import lxml
 
-
-def optimize(model_func):
-    def wrapper(*args, **kwargs):
-        model = model_func(*args, **kwargs)
-        model.optimize()
-        return model
-
-    return wrapper
-
-
-@optimize
-def load_model(model_path, solver="cplex"):
-    model = cobra.io.read_sbml_model(model_path)
-    model.solver = solver
-    return model
-
-
-def export_deletion_flux_as_tsv(df, filepath):
+def export_df_as_tsv(df, filepath):
+    """Exports pandas DataFrame as TSV."""
     df.to_csv(filepath, sep="\t", index=False)
-
-
-@optimize
-def knockout_genes(model, genes):
-    # Removes genes entirely from model
-    cobra.manipulation.remove_genes(model, genes)
-    return model
-
-
-def assess_gene_knockout_lethality(model, gene):
-    with model:
-        model.genes.query(gene).pop().knock_out()
-        if model.optimize().objective_value == 0:
-            return True
-        return False
 
 
 def read_json(filepath, **kwargs):
