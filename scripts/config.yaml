@@ -1,0 +1,7 @@
+yeast-fba:
+  model-description: szappanos
+  gene:
+    # The order in which you place the deletions matter - especially for attenuation
+    deletions: {YEL063C: 0.0, YNL268W: 0.0, YLR303W: 0.0, YCL018W: 0.85, YEL021W: 0.85}
+  # If empty, use every media
+  media: []
