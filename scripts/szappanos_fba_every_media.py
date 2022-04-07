@@ -66,10 +66,14 @@ def main(model_description=""):
             os.mkdir(dirname)
         json_filename = f"{dirname}.json"
         tsv_filename = f"{dirname}.tsv"
-        single_gene_ko_tsv_filename = f"single_gene_ko_{tsv_filename}"
-        # double_gene_ko_tsv_filename = f"double_gene_ko_{tsv_filename}"
-        summary["single-gene-ko-tsv-filename"] = single_gene_ko_tsv_filename
-        # summary["double-gene-ko-tsv-filename"] = double_gene_ko_tsv_filename
+        summary[
+            "single-gene-ko-tsv-filename"
+        ] = single_gene_ko_tsv_filename = f"single_gene_ko_{tsv_filename}"
+        summary[
+            "single-gene-ko-json-filename"
+        ] = single_gene_ko_json_filename = f"single_gene_ko_{json_filename}"
+        # summary["double-gene-ko-tsv-filename"] = double_gene_ko_tsv_filename = f"double_gene_ko_{tsv_filename}"
+        # summary["double-gene-ko-json-filename"] = double_gene_ko_json_filename = f"double_gene_ko_{json_filename}"
 
         # Export TSV and JSON files
         export_df_as_tsv(
@@ -78,7 +82,7 @@ def main(model_description=""):
         # export_df_as_tsv(
         #     double_gene_deletions_szappanos, os.path.join(dirname, double_gene_ko_tsv_filename)
         # )
-        write_json(summary, os.path.join(dirname, json_filename))
+        write_json(summary, os.path.join(dirname, single_gene_ko_json_filename))
         pprint(summary)
 
 
