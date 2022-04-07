@@ -48,8 +48,8 @@ def get_every_media():
         "YPEtOH": ypetoh,
         "YPGal": ypgal,
         "YPGly": ypgly,
-        "YPLAc": yplac,
-        "YPRAff": ypraff,
+        "YPLac": yplac,
+        "YPRaff": ypraff,
         "YPTE-GLC": ypte_no_glc,
         "YPTE-O2": ypte_no_o2,
     }
